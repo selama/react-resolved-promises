@@ -1845,7 +1845,7 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^24.0.13":
+"@types/jest@^24.0.0", "@types/jest@^24.0.13":
   version "24.9.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/jest/-/jest-24.9.1.tgz#02baf9573c78f1b9974a5f36778b366aa77bd534"
   integrity sha1-Arr5Vzx48bmXSl82d4s2aqd71TQ=
@@ -1913,6 +1913,11 @@
   version "13.13.9"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/node/-/node-13.13.9.tgz#79df4ae965fb76d31943b54a6419599307a21394"
   integrity sha1-ed9K6WX7dtMZQ7VKZBlZkweiE5Q=
+
+"@types/node@^8.0.0":
+  version "8.10.61"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/node/-/node-8.10.61.tgz#d299136ce54bcaf1abaa4a487f9e4bedf6b0d393"
+  integrity sha1-0pkTbOVLyvGrqkpIf55L7faw05M=
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -16367,7 +16372,7 @@ tryer@^1.0.1:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha1-8shUBoALmw90yfdGW4HqrSQSUvg=
 
-ts-jest@^24.0.0:
+ts-jest@^24.0.0, ts-jest@^24.0.2:
   version "24.3.0"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/ts-jest/-/ts-jest-24.3.0.tgz#b97814e3eab359ea840a1ac112deae68aa440869"
   integrity sha1-uXgU4+qzWeqEChrBEt6uaKpECGk=
@@ -16624,6 +16629,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@~3.6.0:
+  version "3.6.5"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/typescript/-/typescript-3.6.5.tgz#dae20114a7b4ff4bd642db9c8c699f2953e8bbdb"
+  integrity sha1-2uIBFKe0/0vWQtucjGmfKVPou9s=
 
 typescript@~3.7.5:
   version "3.7.5"
@@ -17991,7 +18001,7 @@ yoshi-template-intro@^4.1.0:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/yoshi-template-intro/-/yoshi-template-intro-4.85.0.tgz#6fc79c6c62dea0f5f6c36bebd4ccb9d095592507"
   integrity sha1-b8ecbGLeoPX2w2vr1My50JVZJQc=
 
-yoshi@^4.1.0:
+yoshi@^4.0.0, yoshi@^4.1.0:
   version "4.85.0"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/yoshi/-/yoshi-4.85.0.tgz#63463f97a61346f8eba48b6ba0bdef98d8bf841c"
   integrity sha1-Y0Y/l6YTRvjrpItroL3vmNi/hBw=
