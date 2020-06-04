@@ -36,6 +36,7 @@
     "@types/react": "^16.7.20",
     "@types/react-dom": "^16.0.11",
     "@wix/fedops-logger": "^5.0.0",
+    "@wix/react-resolved-promises": "^1.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "husky": "^4.2.1",
