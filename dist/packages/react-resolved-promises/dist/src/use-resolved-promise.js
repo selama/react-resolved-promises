@@ -17,6 +17,7 @@ var ResolvedPromiseStatus;
   ResolvedPromiseStatus["PENDING_RERUN"] = "pending-rerun";
   ResolvedPromiseStatus["RESOLVED"] = "resolved";
   ResolvedPromiseStatus["REJECT"] = "reject";
+  ResolvedPromiseStatus["SETTLED"] = "settled";
 })(ResolvedPromiseStatus = exports.ResolvedPromiseStatus || (exports.ResolvedPromiseStatus = {}));
 
 ;
@@ -25,7 +26,7 @@ var getInitStatus = function getInitStatus(promiseId, memo) {
   var _a;
 
   if ((_a = memo) === null || _a === void 0 ? void 0 : _a.get(promiseId)) {
-    return ResolvedPromiseStatus.RESOLVED;
+    return ResolvedPromiseStatus.SETTLED;
   }
 
   return ResolvedPromiseStatus.PENDING;
@@ -40,7 +41,8 @@ var getInitData = function getInitData(promiseId, memo) {
 exports.useResolvedPromise = function (promiseId, asyncFunction) {
   var _a = react_1.useContext(exports.ResolvedPromiseContext),
       mode = _a.mode,
-      memo = _a.memo;
+      memo = _a.memo,
+      addPromiseToResolve = _a.addPromiseToResolve;
 
   var _b = react_1.useState(getInitStatus(promiseId, memo)),
       status = _b[0],
@@ -72,17 +74,18 @@ exports.useResolvedPromise = function (promiseId, asyncFunction) {
     }
   }, []);
 
-  if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING) {}
+  if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING && addPromiseToResolve) {
+    addPromiseToResolve(asyncFunction().then(function (data) {
+      return memo.set(promiseId, data);
+    })["catch"](function (data) {
+      return memo.set(promiseId, data);
+    }));
+  }
 
   return {
     status: status,
     data: data,
     rerun: rerun
-  };
-  return {
-    status: ResolvedPromiseStatus.PENDING,
-    data: {},
-    rerun: function rerun() {}
   };
 };
 
@@ -91,7 +94,7 @@ var ResolvedPromiseMode;
 (function (ResolvedPromiseMode) {
   ResolvedPromiseMode["SSR"] = "ssr";
   ResolvedPromiseMode["BROWSER"] = "browser";
-})(ResolvedPromiseMode || (ResolvedPromiseMode = {}));
+})(ResolvedPromiseMode = exports.ResolvedPromiseMode || (exports.ResolvedPromiseMode = {}));
 
 exports.ResolvedPromiseContext = react_1.createContext({
   mode: ResolvedPromiseMode.BROWSER
@@ -103,7 +106,7 @@ exports.ResolvedPromiseProvider = function (_a) {
   return react_1["default"].createElement(exports.ResolvedPromiseContext.Provider, {
     value: {
       mode: ResolvedPromiseMode.BROWSER,
-      memo: memo
+      memo: jsonToMap(memo)
     }
   }, children);
 };
@@ -147,7 +150,7 @@ exports.renderToStringOnResolvedPromises = function (Component) {
           /*return*/
           , {
             html: html,
-            memo: memo
+            memo: mapToJson(memo)
           }];
       }
     });
@@ -162,4 +165,20 @@ var renderAttempt = function renderAttempt(Component, memo, addPromiseToResolve)
       addPromiseToResolve: addPromiseToResolve
     }
   }, Component));
+};
+
+var mapToJson = function mapToJson(m) {
+  var json = {};
+  m.forEach(function (v, k) {
+    json[k] = v;
+  });
+  return json;
+};
+
+var jsonToMap = function jsonToMap(json) {
+  var m = new Map();
+  Object.keys(json).forEach(function (key) {
+    return m.set(key, json[key]);
+  });
+  return m;
 };

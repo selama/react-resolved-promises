@@ -9,10 +9,11 @@ export declare enum ResolvedPromiseStatus {
     PENDING = "pending",
     PENDING_RERUN = "pending-rerun",
     RESOLVED = "resolved",
-    REJECT = "reject"
+    REJECT = "reject",
+    SETTLED = "settled"
 }
 export declare const useResolvedPromise: TUseResolvedPromise;
-declare enum ResolvedPromiseMode {
+export declare enum ResolvedPromiseMode {
     SSR = "ssr",
     BROWSER = "browser"
 }

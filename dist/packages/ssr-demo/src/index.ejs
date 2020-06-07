@@ -21,6 +21,7 @@
       window.__BASEURL__ = '<%= basename %>';
       window.__LOCALE__ = '<%= language %>';
       window.__MESSAGES__ = <%- messages %>;
+      window.__MEMO__ = <%- memo %>;
     </script>
     <script src="<%= baseStaticsUrl %>app.bundle<% if (!debug) { %>.min<% } %>.js"></script>
   </body>

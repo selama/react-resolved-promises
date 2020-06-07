@@ -1,7 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.renderToStringOnResolvedPromises = exports.ResolvedPromiseProvider = exports.ResolvedPromiseContext = exports.useResolvedPromise = exports.ResolvedPromiseStatus = void 0;
+exports.renderToStringOnResolvedPromises = exports.ResolvedPromiseProvider = exports.ResolvedPromiseContext = exports.ResolvedPromiseMode = exports.useResolvedPromise = exports.ResolvedPromiseStatus = void 0;
 
 var _tslib = require("tslib");
 
@@ -23,6 +23,7 @@ exports.ResolvedPromiseStatus = ResolvedPromiseStatus;
   ResolvedPromiseStatus["PENDING_RERUN"] = "pending-rerun";
   ResolvedPromiseStatus["RESOLVED"] = "resolved";
   ResolvedPromiseStatus["REJECT"] = "reject";
+  ResolvedPromiseStatus["SETTLED"] = "settled";
 })(ResolvedPromiseStatus || (exports.ResolvedPromiseStatus = ResolvedPromiseStatus = {}));
 
 ;
@@ -31,7 +32,7 @@ var getInitStatus = function getInitStatus(promiseId, memo) {
   var _a;
 
   if ((_a = memo) === null || _a === void 0 ? void 0 : _a.get(promiseId)) {
-    return ResolvedPromiseStatus.RESOLVED;
+    return ResolvedPromiseStatus.SETTLED;
   }
 
   return ResolvedPromiseStatus.PENDING;
@@ -46,7 +47,8 @@ var getInitData = function getInitData(promiseId, memo) {
 var useResolvedPromise = function useResolvedPromise(promiseId, asyncFunction) {
   var _a = (0, _react.useContext)(ResolvedPromiseContext),
       mode = _a.mode,
-      memo = _a.memo;
+      memo = _a.memo,
+      addPromiseToResolve = _a.addPromiseToResolve;
 
   var _b = (0, _react.useState)(getInitStatus(promiseId, memo)),
       status = _b[0],
@@ -78,27 +80,29 @@ var useResolvedPromise = function useResolvedPromise(promiseId, asyncFunction) {
     }
   }, []);
 
-  if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING) {}
+  if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING && addPromiseToResolve) {
+    addPromiseToResolve(asyncFunction().then(function (data) {
+      return memo.set(promiseId, data);
+    })["catch"](function (data) {
+      return memo.set(promiseId, data);
+    }));
+  }
 
   return {
     status: status,
     data: data,
     rerun: rerun
   };
-  return {
-    status: ResolvedPromiseStatus.PENDING,
-    data: {},
-    rerun: function rerun() {}
-  };
 };
 
 exports.useResolvedPromise = useResolvedPromise;
 var ResolvedPromiseMode;
+exports.ResolvedPromiseMode = ResolvedPromiseMode;
 
 (function (ResolvedPromiseMode) {
   ResolvedPromiseMode["SSR"] = "ssr";
   ResolvedPromiseMode["BROWSER"] = "browser";
-})(ResolvedPromiseMode || (ResolvedPromiseMode = {}));
+})(ResolvedPromiseMode || (exports.ResolvedPromiseMode = ResolvedPromiseMode = {}));
 
 var ResolvedPromiseContext = (0, _react.createContext)({
   mode: ResolvedPromiseMode.BROWSER
@@ -111,7 +115,7 @@ var ResolvedPromiseProvider = function ResolvedPromiseProvider(_a) {
   return /*#__PURE__*/_react["default"].createElement(ResolvedPromiseContext.Provider, {
     value: {
       mode: ResolvedPromiseMode.BROWSER,
-      memo: memo
+      memo: jsonToMap(memo)
     }
   }, children);
 };
@@ -157,7 +161,7 @@ var renderToStringOnResolvedPromises = function renderToStringOnResolvedPromises
           /*return*/
           , {
             html: html,
-            memo: memo
+            memo: mapToJson(memo)
           }];
       }
     });
@@ -174,4 +178,20 @@ var renderAttempt = function renderAttempt(Component, memo, addPromiseToResolve)
       addPromiseToResolve: addPromiseToResolve
     }
   }, Component));
+};
+
+var mapToJson = function mapToJson(m) {
+  var json = {};
+  m.forEach(function (v, k) {
+    json[k] = v;
+  });
+  return json;
+};
+
+var jsonToMap = function jsonToMap(json) {
+  var m = new Map();
+  Object.keys(json).forEach(function (key) {
+    return m.set(key, json[key]);
+  });
+  return m;
 };
