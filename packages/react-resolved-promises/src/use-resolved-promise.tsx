@@ -66,7 +66,7 @@ export const useResolvedPromise: TUseResolvedPromise = (promiseId: string, async
     return { status, data, rerun };
 }
 
-export enum ResolvedPromiseMode {
+enum ResolvedPromiseMode {
     SSR = 'ssr',
     BROWSER = 'browser'
 }
@@ -79,7 +79,7 @@ type TResolvedPromiseContext = {
 
 type TMemo = Map<string, any>;
 
-export const ResolvedPromiseContext = createContext<TResolvedPromiseContext>({ mode: ResolvedPromiseMode.BROWSER });
+const ResolvedPromiseContext = createContext<TResolvedPromiseContext>({ mode: ResolvedPromiseMode.BROWSER });
 
 export const ResolvedPromiseProvider = ({ memo, children }) => {
     return <ResolvedPromiseContext.Provider value={{ mode: ResolvedPromiseMode.BROWSER, memo: jsonToMap(memo) }}>
