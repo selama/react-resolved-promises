@@ -1,24 +1,13 @@
 import React from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import s from './App.scss';
+import { SW } from '../SW/sw';
 
-/* <-- To remove demo stuff just copy-paste:
-  \{?/\*\s?<--([\n\n]|.)*?-->\s?\*\/\}?
-  to your search input with RegExp enabled and remove everything matched.
---> */
 
 interface AppProps extends WithTranslation {}
 
 class App extends React.Component<AppProps> {
-  /* <-- Feel free to remove this lifecycle hook and state */
-  /* <-- Please also remove `yoshi-template-intro` from your package.json */
-  state = {
-    TemplateIntro: () => null,
-  };
-  async componentDidMount() {
-    const { default: TemplateIntro } = await import('yoshi-template-intro');
-    this.setState({ TemplateIntro });
-  } /* --> */
+  
 
   render() {
     const { t } = this.props;
@@ -28,9 +17,7 @@ class App extends React.Component<AppProps> {
         <h2 className={s.title} data-hook="app-title">
           {t('app.title')}
         </h2>
-        {/* <-- Feel free to remove TemplateIntro */}
-        <this.state.TemplateIntro />
-        {/* --> */}
+        <SW/>
       </div>
     );
   }

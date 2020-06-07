@@ -1,3 +1,1 @@
-import Counter from './counter';
-
-export default new Counter();
+export * from './use-resolved-promise';
