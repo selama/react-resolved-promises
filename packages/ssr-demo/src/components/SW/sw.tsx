@@ -2,22 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import {useResolvedPromise, ResolvedPromiseStatus } from '@wix/react-resolved-promises';
 import axois from 'axios';
 
-const delay = (f: () => Promise<any>, ms: number) => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            f().then(result => resolve(result))
-        }, ms);
-    });
-}
-
-const getChar = (id: number) => delay(() => axois.get(`https://swapi.dev/api/people/${id}/`).then(({data}) => data), 2000);
+const getCharacter = (id: number) => axois.get(`https://swapi.dev/api/people/${id}/`).then(({data}) => data);
 
 export const SW = () => {
     const [id, setId] = useState(1);
-    const { status, data, rerun } = useResolvedPromise('/people/1/', () => getChar(id));
+    const { status, data, rerun } = useResolvedPromise('/people/1/', () => getCharacter(id));
 
     useEffectExceptOnMount(() => {
-        rerun(() => getChar(id))
+        rerun(() => getCharacter(id))
     }, [id]);
 
     if (status === ResolvedPromiseStatus.PENDING || status === ResolvedPromiseStatus.PENDING_RERUN) {
