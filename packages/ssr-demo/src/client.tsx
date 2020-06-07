@@ -17,7 +17,7 @@ const fedopsLogger = createFedopsLogger('ssr-demo');
 // See https://github.com/wix-private/fed-infra/blob/master/fedops/fedops-logger/README.md
 fedopsLogger.appLoaded();
 
-ReactDOM.render(
+ReactDOM.hydrate(
       <ResolvedPromiseProvider memo={memo}>
         <App />
       </ResolvedPromiseProvider>,

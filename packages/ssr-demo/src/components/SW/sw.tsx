@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {useResolvedPromise, ResolvedPromiseStatus } from '@wix/react-resolved-promises';
 import axois from 'axios';
 
@@ -16,7 +16,7 @@ export const SW = () => {
     const [id, setId] = useState(1);
     const { status, data, rerun } = useResolvedPromise('/people/1/', () => getChar(id));
 
-    useEffect(() => {
+    useEffectExceptOnMount(() => {
         rerun(() => getChar(id))
     }, [id]);
 
@@ -30,3 +30,15 @@ export const SW = () => {
         </div>
     );
 }
+
+
+const useEffectExceptOnMount = (effect: () => void, dependencies: any[]) => {
+    const mounted = useRef(false);
+    useEffect(() => {
+      if (mounted.current) {
+        effect();
+      } else {
+        mounted.current = true;
+      }
+    }, dependencies);
+  };
