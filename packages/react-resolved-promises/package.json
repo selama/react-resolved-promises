@@ -54,7 +54,7 @@
   "eslintConfig": {
     "extends": "yoshi"
   },
-  "dependencies": {
-    "react": "^16.13.1"
+  "peerDependencies": {
+    "react": "16.13.1"
   }
 }

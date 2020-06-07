@@ -1,0 +1,4 @@
+{
+  "app.css": "http://localhost:3200/app.css",
+  "app.js": "http://localhost:3200/app.bundle.js"
+}

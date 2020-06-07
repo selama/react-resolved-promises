@@ -14,11 +14,12 @@ export enum ResolvedPromiseStatus {
     PENDING_RERUN = 'pending-rerun',
     RESOLVED = 'resolved',
     REJECT = 'reject',
+    SETTLED = 'settled',
 };
 
 const getInitStatus = (promiseId: string, memo: TMemo) => {
     if (memo?.get(promiseId)) {
-        return ResolvedPromiseStatus.RESOLVED;
+        return ResolvedPromiseStatus.SETTLED;
     }
     return ResolvedPromiseStatus.PENDING;
 }
@@ -28,7 +29,7 @@ const getInitData = (promiseId: string, memo: TMemo) => {
 }
 
 export const useResolvedPromise: TUseResolvedPromise = (promiseId: string, asyncFunction: TAsyncFunction) => {
-    const { mode, memo } = useContext(ResolvedPromiseContext);
+    const { mode, memo, addPromiseToResolve } = useContext(ResolvedPromiseContext);
     const [status, setStatus] = useState(getInitStatus(promiseId, memo));
     const [data, setData] = useState(getInitData(promiseId, memo));
 
@@ -54,14 +55,18 @@ export const useResolvedPromise: TUseResolvedPromise = (promiseId: string, async
         }
     }, []);
 
-    if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING) {
-
+    if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING && addPromiseToResolve) {
+        addPromiseToResolve(
+            asyncFunction()
+            .then(data => memo.set(promiseId, data))
+            .catch(data => memo.set(promiseId, data))
+        )
     }
 
     return { status, data, rerun };
 }
 
-enum ResolvedPromiseMode {
+export enum ResolvedPromiseMode {
     SSR = 'ssr',
     BROWSER = 'browser'
 }
@@ -74,10 +79,10 @@ type TResolvedPromiseContext = {
 
 type TMemo = Map<string, any>;
 
-const ResolvedPromiseContext = createContext<TResolvedPromiseContext>({ mode: ResolvedPromiseMode.BROWSER });
+export const ResolvedPromiseContext = createContext<TResolvedPromiseContext>({ mode: ResolvedPromiseMode.BROWSER });
 
 export const ResolvedPromiseProvider = ({ memo, children }) => {
-    return <ResolvedPromiseContext.Provider value={{ mode: ResolvedPromiseMode.BROWSER, memo }}>
+    return <ResolvedPromiseContext.Provider value={{ mode: ResolvedPromiseMode.BROWSER, memo: jsonToMap(memo) }}>
         {children}
     </ResolvedPromiseContext.Provider>
 }
@@ -103,18 +108,33 @@ export const renderToStringOnResolvedPromises: TRenderToStringOnResolvedPromises
         html = renderAttempt(Component, memo, addPromiseToResolve);
     }
 
-    return { html, memo };
+    return { html, memo: mapToJson(memo) };
 }
 
 const renderAttempt = (
     Component: any,
     memo: Map<string, any>,
     addPromiseToResolve: (promise: Promise<any>) => void,
-) =>
-    ReactDOMServer.renderToString(
+) =>{
+    return ReactDOMServer.renderToString(
         <ResolvedPromiseContext.Provider
             value={{ mode: ResolvedPromiseMode.SSR, memo, addPromiseToResolve }}
         >
             {Component}
         </ResolvedPromiseContext.Provider>,
     );
+}
+
+const mapToJson = (m: Map<string, any>) => {
+    const json = {};
+    m.forEach((v, k) => {
+        json[k] = v;
+    });
+    return json;
+}
+
+const jsonToMap = (json: any) => {
+    const m = new Map();
+    Object.keys(json).forEach(key => m.set(key, json[key]));
+    return m;
+}

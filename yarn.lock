@@ -1965,6 +1965,11 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/serialize-javascript@^1.5.0":
+  version "1.5.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/serialize-javascript/-/serialize-javascript-1.5.0.tgz#bdd334cfbb4fc0eca1fc608da37ad733c86381eb"
+  integrity sha1-vdM0z7tPwOyh/GCNo3rXM8hjges=
+
 "@types/serve-static@*":
   version "1.13.4"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/serve-static/-/serve-static-1.13.4.tgz#6662a93583e5a6cabca1b23592eb91e12fa80e7c"
@@ -2638,11 +2643,13 @@
   integrity sha1-zx0oZGtQwBxrBvRKgz59Qkb99WU=
 
 "@wix/wix-express-csrf@latest", "@wix/wix-express-csrf@~1.0.31":
-  version "1.0.1226"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wix-express-csrf/-/@wix/wix-express-csrf-1.0.1226.tgz#2e7149b6d906cc87d3f87318c9975ab7c24b5c20"
-  integrity sha1-LnFJttkGzIfT+HMYyZdat8JLXCA=
+  version "1.0.1227"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wix-express-csrf/-/@wix/wix-express-csrf-1.0.1227.tgz#e6140f8c986d74621d24f4dfd83f7bcc0e990b64"
+  integrity sha1-5hQPjJhtdGIdJPTf2D97zA6ZC2Q=
   dependencies:
     "@types/express" "4.17.6"
+    "@wix/wix-aspects" "~1.0.640"
+    "@wix/wix-common-aspects" "~1.0.0"
     "@wix/wix-errors" "~1.1.0"
     "@wix/wnp-event-bus" "~1.0.0"
 
@@ -3419,10 +3426,11 @@
     "@wix/wix-measured" "~1.0.506"
 
 "@wix/wnp-protobufjs@~1.0.0":
-  version "1.0.232"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wnp-protobufjs/-/@wix/wnp-protobufjs-1.0.232.tgz#f082668f8ff4db7001adae4c02a1722b71bd28e2"
-  integrity sha1-8IJmj4/023ABra5MAqFyK3G9KOI=
+  version "1.0.233"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/wnp-protobufjs/-/@wix/wnp-protobufjs-1.0.233.tgz#389a34cbd24babc3e2415e970f248209f9175125"
+  integrity sha1-OJo0y9JLq8PiQV6XDySCCfkXUSU=
   dependencies:
+    diff "4.0.2"
     lodash "4.17.15"
     protobufjs "6.9.0"
     require-in-the-middle "5.0.3"
@@ -6614,7 +6622,7 @@ diff@3.5.0, diff@^3.1.0:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha1-gAwN0eCov7yVg1wgKtIg/jF+WhI=
 
-diff@^4.0.1:
+diff@4.0.2, diff@^4.0.1:
   version "4.0.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha1-YPOuy4nV+uUgwRqhnvwruYKq3n0=
@@ -14146,15 +14154,15 @@ react-dev-utils@7.0.5:
     strip-ansi "5.0.0"
     text-table "0.2.0"
 
-react-dom@16.12.0:
-  version "16.12.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
-  integrity sha1-DaS3FLjRPCA4yTlrVKkrrqYz/hE=
+react-dom@16.13.1:
+  version "16.13.1"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
+  integrity sha1-wb03MxoEhsB47lTEdAcgmTsuDn8=
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.18.0"
+    scheduler "^0.19.1"
 
 react-error-overlay@^5.1.4:
   version "5.1.6"
@@ -14193,16 +14201,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
-react@16.12.0:
-  version "16.12.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
-  integrity sha1-DAqcahQkKeNhSDTVp3jhiqeKC4M=
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-
-react@^16.13.1:
+react@16.13.1:
   version "16.13.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha1-LoGIIvGpdDEiwGPWQQ2FweOv5I4=
@@ -14946,10 +14945,10 @@ saxes@^3.1.9:
   dependencies:
     xmlchars "^2.1.1"
 
-scheduler@^0.18.0:
-  version "0.18.0"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/scheduler/-/scheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
-  integrity sha1-WQGtZlm8HY8/2vNut6Z7DWdGscQ=
+scheduler@^0.19.1:
+  version "0.19.1"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+  integrity sha1-Tz4u0sGn1laB9MhU+oxaHMtA8ZY=
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

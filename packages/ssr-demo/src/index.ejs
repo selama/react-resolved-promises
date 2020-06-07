@@ -12,15 +12,16 @@
     <script>
       fedopsLogger.reportAppLoadStarted("ssr-demo");
     </script>
-    <script src="https://<%= staticsDomain %>/unpkg/react@16.12.0/umd/react<% if (!debug) { %>.production.min<% } else { %>.development<% } %>.js"></script>
-    <script src="https://<%= staticsDomain %>/unpkg/react-dom@16.12.0/umd/react-dom<% if (!debug) { %>.production.min<% } else { %>.development<% } %>.js"></script>
+    <script src="https://<%= staticsDomain %>/unpkg/react@16.13.1/umd/react<% if (!debug) { %>.production.min<% } else { %>.development<% } %>.js"></script>
+    <script src="https://<%= staticsDomain %>/unpkg/react-dom@16.13.1/umd/react-dom<% if (!debug) { %>.production.min<% } else { %>.development<% } %>.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><%- html %></div>
     <script>
       window.__BASEURL__ = '<%= basename %>';
       window.__LOCALE__ = '<%= language %>';
       window.__MESSAGES__ = <%- messages %>;
+      window.__MEMO__ = <%- memo %>;
     </script>
     <script src="<%= baseStaticsUrl %>app.bundle<% if (!debug) { %>.min<% } %>.js"></script>
   </body>
