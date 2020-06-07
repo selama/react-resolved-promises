@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import {TMemo, ResolvedPromiseContext, ResolvedPromiseMode} from './resolved-promise-context';
+import { TMemo, ResolvedPromiseContext, ResolvedPromiseMode } from './resolved-promise-context';
 
 type TAsyncFunction = () => Promise<any>;
 
@@ -19,6 +19,7 @@ export enum ResolvedPromiseStatus {
 
 const getInitStatus = (promiseId: string, memo: TMemo) => {
     if (memo?.get(promiseId)) {
+        //TODO make memo aware of resolve/reject
         return ResolvedPromiseStatus.SETTLED;
     }
     return ResolvedPromiseStatus.PENDING;
@@ -58,8 +59,8 @@ export const useResolvedPromise: TUseResolvedPromise = (promiseId: string, async
     if (mode === ResolvedPromiseMode.SSR && status === ResolvedPromiseStatus.PENDING && addPromiseToResolve) {
         addPromiseToResolve(
             asyncFunction()
-            .then(data => memo.set(promiseId, data))
-            .catch(data => memo.set(promiseId, data))
+                .then(data => memo.set(promiseId, data))
+                .catch(data => memo.set(promiseId, data))
         )
     }
 
